@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Highcharts data from JSON Response</title>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>		
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script type="text/javascript">
+        $(function () {
+                var processed_json = new Array();   
+                $.getJSON('../json/luckyTeams.json', function(data) {
+                    // Populate series
+                    console.log(data.length)
+                    for (i = 0; i < data.length; i++){
+                        processed_json.push(data[i]);
+                    }
+                    console.log(processed_json)
+                    // draw chart
+                    $('#container').highcharts({
+                    chart: {
+                        type: "column"
+                    },
+                    title: {
+                        text: "Toss Wins of Each Team over all the seasons of Ipl"
+                    },
+                    xAxis: {
+                        type: 'category',
+                        allowDecimals: false,
+                        title: {
+                            text: "Teams"
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: "Toss Wins"
+                        }
+                    },
+                    series: [{
+	                    name: 'Toss Wins',
+                        data: processed_json
+                    }]
+                }); 
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="container" style="height: 400px"></div>
+    
+</body>
+</html>
